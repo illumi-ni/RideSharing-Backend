@@ -1,14 +1,29 @@
+const mongoose = require('mongoose')
+const validator = require('validator')
 const Customer = mongoose.model('Customer', {
     fullname: {
-        type: String
+        type: String,
+        required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        validate: value => {
+          if (!validator.isEmail(value)) {
+            throw new Error({ error: "Invalid email address" });
+          }
+        }
     },
     dob:{
-        type: String
+        type: String,
+        required: true
     },
     gender:{
-        type: String
+        type: String,
+        required: true
     }
 })
+
+module.exports = Customer;
