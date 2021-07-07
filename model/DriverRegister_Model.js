@@ -24,14 +24,9 @@ const Driver = mongoose.model('Driver',{
         
     },
     licence:{
-        type:String,
-        default:"no-photo.jpg"
-       
+        type:String
     },
-    gender: {
-        type: String,
-        required: true
-    },
+   
     dob:{
         type:String,
         required:true
