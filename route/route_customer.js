@@ -7,10 +7,10 @@ const{check, validationResult} = require('express-validator')
 
 //Customer Sign up
 router.post('/customer/insert',[
-    check('fullname', "Please enter your name").not().isEmpty(),
-    check('email', "Invalid Email address").isEmail(),
-    check('contact', "Contact is required").not().isEmpty(),
-    check('gender', "Please choose a gender").not().isEmpty()
+    // check('fullname', "Please enter your name").not().isEmpty(),
+    // check('email', "Invalid Email address").isEmail(),
+    // check('contact', "Contact is required").not().isEmpty(),
+    // check('gender', "Please choose a gender").not().isEmpty()
 ], function(req, res){
     const errors = validationResult(req)
     if(errors.isEmpty()){
@@ -20,6 +20,7 @@ router.post('/customer/insert',[
         const gender = req.body.gender
         
         const CustomerData = new Customer({fullname:fullname, email:email, contact:contact, gender: gender})
+        console.log(CustomerData)
         CustomerData.save()
         //error handling
         .then(function(result){

@@ -17,8 +17,6 @@ app.use(express.static("images"))
 app.use(driver_route)
 
 app.use(route_customer)
-<<<<<<< HEAD
+
 app.listen(90)
-=======
-app.listen(3000)
->>>>>>> d5922bc29cf28a0fa31e250dbb71ff8d6849d6c8
+
