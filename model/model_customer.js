@@ -16,7 +16,7 @@ const Customer = mongoose.model('Customer', {
           }
         }
     },
-    dob:{
+    contact:{
         type: String,
         required: true
     },
