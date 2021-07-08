@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+
 const Driver = mongoose.model('Driver',{
     fullname:{
         type: String, 
@@ -12,12 +13,10 @@ const Driver = mongoose.model('Driver',{
         type: String,
         required : true
     },
-    
     phone: {
         type: String,
         required :true
     },
-   
     citizenship:{
         type: String,
         required : true
@@ -26,7 +25,6 @@ const Driver = mongoose.model('Driver',{
     licence:{
         type:String
     },
-   
     dob:{
         type:String,
         required:true
@@ -39,6 +37,6 @@ const Driver = mongoose.model('Driver',{
         type:String,
         required:true
     }  
-})
+});
 
-module.exports = Driver
+module.exports = Driver;

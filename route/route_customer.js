@@ -1,9 +1,9 @@
-const express = require('express')
-const router = express.Router()
-const Customer = require('../model/model_customer')
-const jwt = require('jsonwebtoken')
-const auth = require('../middleware/auth')
-const { check, validationResult } = require('express-validator')
+const express = require('express');
+const router = express.Router();
+const Customer = require('../model/model_customer');
+const jwt = require('jsonwebtoken');
+const auth = require('../middleware/auth');
+const { check, validationResult } = require('express-validator');
 
 //Customer Sign up
 router.post('/customer/insert', [
@@ -12,26 +12,26 @@ router.post('/customer/insert', [
     check('contact', "Contact is required").not().isEmpty(),
     check('gender', "Please choose a gender").not().isEmpty()
 ], function (req, res) {
-    const errors = validationResult(req)
-    if (errors.isEmpty()) {
-        const fullname = req.body.fullname
-        const email = req.body.email
-        const contact = req.body.contact
-        const gender = req.body.gender
+    const errors = validationResult(req);
 
-        const CustomerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender })
-        console.log(CustomerData)
+    if (errors.isEmpty()) {
+        const fullname = req.body.fullname;
+        const email = req.body.email;
+        const contact = req.body.contact;
+        const gender = req.body.gender;
+
+        const CustomerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender });
         CustomerData.save()
             //error handling
             .then(function (result) {
-                res.status(201).json({ message: "Customer Registered!!", success: true })
+                res.status(201).json({ success: true, message: "Customer Registered!!" });
             }).catch(function (err) {
-                res.status(500).json({ message: err, success: false })
+                res.status(500).json({ success: false, message: err });
             })
 
     } else {
-        res.status(400).json(errors.array())
+        res.status(400).json(errors.array());
     }
 })
 
-module.exports = router
+module.exports = router;

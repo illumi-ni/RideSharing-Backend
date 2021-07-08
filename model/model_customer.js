@@ -1,5 +1,6 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
+const mongoose = require('mongoose');
+const validator = require('validator');
+
 const Customer = mongoose.model('Customer', {
     fullname: {
         type: String,
@@ -24,6 +25,6 @@ const Customer = mongoose.model('Customer', {
         type: String,
         required: true
     }
-})
+});
 
 module.exports = Customer;

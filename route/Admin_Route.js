@@ -25,12 +25,12 @@ router.post('/admin/login', function (req, res) {
                 res.status(200).json({
                     messsage: "Auth success",
                     token: token
-                })
-            })
+                });
+            });
         })
         .catch(function (err) {
-            res.status(500).json({ messsage: err })
-        })
-})
+            res.status(500).json({ messsage: err });
+        });
+});
 
 module.exports = router;
