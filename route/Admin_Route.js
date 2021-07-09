@@ -1,9 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const Admin = require('../models/adminModel');
+const Admin = require('../model/Admin_Model');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+router.post('/admin/signup',
+
+ function(req, res){
+
+    const username = req.body.username
+    const password= req.body.password
+
+     //encrypt 
+    bcryptjs.hash(password,10,function(err, hash){ //if it ok then it will return hash value otherwise err value
+        const info = new Admin({ username:username, password:hash})
+        info.save()
+        .then(function(result){
+            res.status(200).json({success:true})
+        })
+        .catch(function(err){
+            res.status(500).json({success:false})
+        })
+    })
+    
+})
 //login system
 router.post('/admin/login', function (req, res) {
     const username = req.body.username;
