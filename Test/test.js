@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Driver = require('../model/DriverRegister_Model')
+const Customer = require('../model/model_customer')
 const url = 'mongodb://127.0.0.1:27017/RideSharing_TestDB'
 
 beforeAll(async () => {
@@ -30,3 +31,17 @@ afterAll(async () => {
                 expect(result.fullname).toEqual('Ujjal Lamichhane')
             })
     })
+
+        //Customer Registration Testing
+        it("Checking if Customer login works", () => {
+            const customer = {
+                'fullname': 'ujwalLamichhane',
+                'email': 'ujju94576@gmail.com',
+                'contact': '1233434567',
+                'gender': 'male'
+            } 
+            return Customer.create(customer)
+                .then((result) => {
+                    expect(result.fullname).toEqual('ujwalLamichhane')
+                })
+        })
