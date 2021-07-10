@@ -12,16 +12,16 @@ const Customer = mongoose.model('Customer', {
         unique: true,
         lowercase: true,
         validate: value => {
-          if (!validator.isEmail(value)) {
-            throw new Error({ error: "Invalid email address" });
-          }
+            if (!validator.isEmail(value)) {
+                throw new Error({ error: "Invalid email address" });
+            }
         }
     },
-    contact:{
+    contact: {
         type: String,
         required: true
     },
-    gender:{
+    gender: {
         type: String,
         required: true
     }

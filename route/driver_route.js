@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Driver = require('../model/DriverRegister_Model');
+const Driver = require('../model/driver_model');
 const upload = require('../middleware/upload');
 
 //register for driver
@@ -24,13 +24,11 @@ router.post('/admin/register', upload.single('licence'), function (req, res) {
         fullname: fullname, email: email, username: username,
         phone: phone, citizenship: citizenship, licence: req.file.filename, dob: dob, vechileNo: vechileNo, model: model
     });
-    DriverData.save()
-        .then(function (result) {
-            res.status(201).json({ success: true, message: "Driver Registration has been successfully inserted!!!" });
-        })
-        .catch(function (e) {
-            res.status(500).json({ success: false, message: e });
-        })
-})
+    DriverData.save().then(function (result) {
+        res.status(201).json({ success: true, message: "Driver Registration has been successfully inserted!!!" });
+    }).catch(function (e) {
+        res.status(500).json({ success: false, message: e });
+    });
+});
 
 module.exports = router;
