@@ -36,8 +36,8 @@ router.post('/sendotp', function (req, res) {
     transporter.sendMail(mailOptions, (error, info) => {
         if (!error) {
             res.status(201).json({ success: true, message: "OTP sent!" });
-            // console.log('Message sent: %s', info.messageId);
-            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+            console.log('Message sent: %s', info.messageId);
+            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         }
         res.status(500).json({ success: false, message: error });
     });
