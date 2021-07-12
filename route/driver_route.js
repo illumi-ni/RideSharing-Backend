@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Driver = require('../model/driver_model');
 const upload = require('../middleware/upload');
+const jwt = require('jsonwebtoken');
+const bcryptjs = require('bcryptjs');
 
 //register for driver
 router.post('/admin/register', upload.single('licence'), function (req, res) {
@@ -12,6 +14,7 @@ router.post('/admin/register', upload.single('licence'), function (req, res) {
     const fullname = req.body.fullname;
     const email = req.body.email;
     const username = req.body.username;
+    const password = req.body.password;
     const phone = req.body.phone;
     const citizenship = req.body.citizenship;
     const licence = req.body.licence;
@@ -20,15 +23,47 @@ router.post('/admin/register', upload.single('licence'), function (req, res) {
     const model = req.body.model;
 
     //{variable:modelname}
-    const DriverData = new Driver({
-        fullname: fullname, email: email, username: username,
-        phone: phone, citizenship: citizenship, licence: req.file.filename, dob: dob, vechileNo: vechileNo, model: model
-    });
-    DriverData.save().then(function (result) {
-        res.status(201).json({ success: true, message: "Driver Registration has been successfully inserted!!!" });
-    }).catch(function (e) {
-        res.status(500).json({ success: false, message: e });
+    bcryptjs.hash(password, 10, function (err, hash) {
+        const driverData = new Driver({
+            fullname: fullname, email: email, username: username, password: hash,
+            phone: phone, citizenship: citizenship, licence: req.file.filename, dob: dob, vechileNo: vechileNo, model: model
+        });
+        driverData.save().then(function (result) {
+            res.status(201).json({ success: true, message: "Driver Registration has been successfully inserted!!!" });
+        }).catch(function (e) {
+            res.status(500).json({ success: false, message: e });
+        });
     });
 });
+
+//Driver login system
+router.post('/driver/login', function (req, res) {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    Driver.findOne({ email: email })
+        .then(function (driverData) {
+            if (driverData === null) {
+                return res.status(403).json({ message: "user not found", success: false });
+            }
+
+            bcryptjs.compare(password, driverData.password, function (err, result) {
+                if (result === false) {
+                    return res.status(403).json({ message: "Invalid login credentials!!", success: false });
+                }
+
+                //token generate
+                const token = jwt.sign({ driverID: driverData._id }, 'Secretkey');
+                res.status(200).json({
+                    messsage: "Auth success",
+                    token: token,
+                    success: true
+                })
+            })
+        })
+        .catch(function (err) {
+            res.status(500).json({ messsage: err })
+        })
+})
 
 module.exports = router;
