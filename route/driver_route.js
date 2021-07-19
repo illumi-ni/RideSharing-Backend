@@ -55,9 +55,9 @@ router.post('/driver/login', function (req, res) {
                 //token generate
                 const token = jwt.sign({ driverID: driverData._id }, 'Secretkey');
                 res.status(200).json({
-                    messsage: "Auth success",
                     token: token,
-                    success: true
+                    success: true,
+                    driverData: driverData
                 })
             })
         })

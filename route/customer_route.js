@@ -63,4 +63,15 @@ router.post('/verifyotp', function (req, res) {
     }
 });
 
+router.post('/checkEmail', function (req, res) {
+    const email = req.body.email;
+
+    Customer.findOne({ email: email }).then(function (customerData) {
+        const token = jwt.sign({ customerID: customerData._id }, 'Sercretkey');
+        res.status(200).json({ success: true, token: token, customerData: customerData });
+    }).catch(function (err) {
+        res.status(500).json({ success: false, message: err });
+    })
+});
+
 module.exports = router;
