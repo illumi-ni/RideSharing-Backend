@@ -20,7 +20,9 @@
     "path": "^0.12.7",
     "validator": "^13.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cucumber": "^7.0.0-rc.0"
+  },
   "scripts": {
     "test": "jest ./test/test"
   },
