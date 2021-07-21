@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const AdvanceBook= require('../model/advanceBook_model');
+const AdvanceBook= require('../model/advancedBook_model');
 const upload = require('../middleware/upload');
 
 router.post('/customer/booking', function (req, res) {
