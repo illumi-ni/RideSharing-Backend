@@ -13,11 +13,13 @@ const db = require('./database/db');
 const driver_route = require('./route/driver_route');
 const route_customer = require('./route/customer_route');
 const admin_route = require('./route/admin_route');
+const booking_route = require('./route/bookingAdvance_route');
 
 app.use(express.static("images"));
 app.use(driver_route);
 app.use(route_customer);
 app.use(admin_route);
+app.use(booking_route);
 
 const PORT = process.env.PORT || 90;
 app.listen(PORT, () => {
