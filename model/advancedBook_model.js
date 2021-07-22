@@ -17,7 +17,7 @@ const AdvanceBook = mongoose.model('AdvanceBook',{
     to:{
         type:String
     },
-    dob:{
+    date:{
         type:String,
         required:true
     },
@@ -25,6 +25,13 @@ const AdvanceBook = mongoose.model('AdvanceBook',{
         type:String,
         required:true
     },
+    distance:{
+        type:String,
+        required:true
+    },
+    price:{
+        type:String
+    } 
     
 });
 
