@@ -30,10 +30,8 @@ const AdvanceBook = mongoose.model('AdvanceBook',{
         required:true
     },
     price:{
-        type:String,
-        required:true
-    }
-   
+        type:String
+    } 
     
 });
 

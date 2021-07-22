@@ -15,7 +15,8 @@ router.post('/customer/booking', function (req, res) {
     const price = req.body.price;
 
     const BookingData = new AdvanceBook({
-        fullname: fullname, phone: phone, from: from, to: to, date: date, time: time, distance:distance,price:price
+        fullname: fullname, phone: phone, from: from, to: to, date: date, time: time, distance: distance, 
+        price: price
     });
     BookingData.save()
         .then(function (result) {
