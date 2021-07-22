@@ -9,11 +9,13 @@ router.post('/customer/booking', function (req, res) {
     const phone = req.body.phone;
     const from = req.body.from;
     const to = req.body.to;
-    const dob = req.body.dob;
+    const date = req.body.date;
     const time = req.body.time;
+    const distance = req.body.distance;
+    const price = req.body.price;
 
     const BookingData = new AdvanceBook({
-        fullname: fullname, phone: phone, from: from, to: to, dob: dob, time: time, 
+        fullname: fullname, phone: phone, from: from, to: to, date: date, time: time, distance:distance,price:price
     });
     BookingData.save()
         .then(function (result) {
