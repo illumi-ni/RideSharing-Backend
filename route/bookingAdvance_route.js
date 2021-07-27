@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const AdvanceBook= require('../model/advancedBook_model');
 const upload = require('../middleware/upload');
+const auth = require('../middleware/auth');
 
-router.post('/customer/booking', function (req, res) {
+router.post('/customer/booking', auth.checkCustomer, function (req, res) {
  
     const fullname = req.body.fullname;
     const phone = req.body.phone;
