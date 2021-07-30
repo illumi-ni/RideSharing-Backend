@@ -23,23 +23,31 @@ app.use(admin_route);
 app.use(booking_route);
 
 const PORT = process.env.PORT || 90;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
-// // Set up a headless websocket server that prints any
-// // events that come in.
-// const wsServer = new ws.Server({ noServer: true });
-// wsServer.on('connection', socket => {
-//     socket.on('message', message => console.log(message));
-// });
+const wsServer = new ws.Server({ noServer: true });
 
-// // `server` is a vanilla Node.js HTTP server, so use
-// // the same ws upgrade process described here:
-// // https://www.npmjs.com/package/ws#multiple-servers-sharing-a-single-https-server
-// const server = app.listen(3000);
-// server.on('upgrade', (request, socket, head) => {
-//   wsServer.handleUpgrade(request, socket, head, socket => {
-//     wsServer.emit('connection', socket, request);
-//   });
-// });
+wsServer.on('connection', socket => {
+  console.log("New user connected");
+  
+  socket.on('message', function incoming(data) {
+    // const obj = JSON.parse({ data })
+    console.log(data)
+  });
+
+  // socket.send("Hello from the server");
+
+  // const cus = new Customer({ fullname: "fullname", email: "email", contact: "contact", gender: "gender" });
+  // socket.send(JSON.stringify(cus));
+});
+
+// `server` is a vanilla Node.js HTTP server, so use
+// the same ws upgrade process described here:
+// https://www.npmjs.com/package/ws#multiple-servers-sharing-a-single-https-server
+server.on('upgrade', (request, socket, head) => {
+  wsServer.handleUpgrade(request, socket, head, socket => {
+    wsServer.emit('connection', socket, request);
+  });
+});
