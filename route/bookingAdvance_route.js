@@ -38,6 +38,7 @@ router.get('/booking/all', function(req,res){
         res.status(500).json({message:e})
     })
 })
+
 router.get('/booking/single/:fullname', function(req,res){
     const pid = req.params.fullname;
     AdvanceBook.findOne({fullname:pid})
@@ -70,6 +71,18 @@ router.put('/update/booking',function(req, res){
     .catch(function(e){
         res.status(500).json({message: e, success : false});
     })
+})
+
+
+router.delete('/delete/booking/:id', function (req, res) {
+    const id = req.params.id;
+    AdvanceBook.deleteOne({ _id: id })
+        .then(function (result) {
+            res.status(200).json({ message: "Deleted Successfully!!", status: "true" });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e, status: "false" });
+        })
 })
 
 
