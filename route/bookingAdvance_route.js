@@ -29,4 +29,14 @@ router.post('/customer/booking', function (req, res) {
         })
 })
 
+router.get('/booking/all', function(req,res){
+    AdvanceBook.find()
+    .then(function(BookingData){
+        res.status(200).json({success:true, data:BookingData})
+    })
+    .catch(function(e){
+        res.status(500).json({message:e})
+    })
+})
+
 module.exports = router;
