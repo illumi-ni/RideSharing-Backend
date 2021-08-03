@@ -68,4 +68,14 @@ router.post('/driver/login', function (req, res) {
         })
 })
 
+router.get('/driver/all', function(req,res){
+    Driver.find()
+    .then(function(driverData){
+        res.status(200).json({success:true, data:driverData})
+    })
+    .catch(function(e){
+        res.status(500).json({message:e})
+    })
+})
+
 module.exports = router;
