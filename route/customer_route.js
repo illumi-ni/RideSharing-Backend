@@ -74,4 +74,13 @@ router.post('/checkEmail', function (req, res) {
     })
 });
 
+router.get('/customer/all', function(req,res){
+    Customer.find()
+    .then(function(CustomerData){
+        res.status(200).json({success:true, data:CustomerData})
+    })
+    .catch(function(e){
+        res.status(500).json({message:e})
+    })
+})
 module.exports = router;
