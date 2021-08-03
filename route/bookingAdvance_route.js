@@ -49,5 +49,29 @@ router.get('/booking/single/:fullname', function(req,res){
     })
 })
 
+router.put('/update/booking',function(req, res){
+    // console.log(req.body)
+    
+    const id = req.body.id;
+    const fullname = req.body.fullname;
+    const phone = req.body.phone;
+    const from = req.body.from;
+    const to = req.body.to;
+    const date = req.body.date;
+    const time = req.body.time;
+    const distance = req.body.distance;
+    const price = req.body.price;
+
+    AdvanceBook.updateOne({_id: id}, { fullname: fullname, phone: phone, from: from, to: to, date: date, time: time, distance: distance, 
+        price: price})
+    .then(function(result){
+        res.status(200).json({message: "Booking updated!!", success: true});
+    })
+    .catch(function(e){
+        res.status(500).json({message: e, success : false});
+    })
+})
+
+
 
 module.exports = router;
