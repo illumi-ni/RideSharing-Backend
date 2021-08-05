@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const otp = require('./OTPverify');
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const { request } = require('express');
 
 //Customer Sign up
 router.post('/customer/insert', [
@@ -83,4 +84,17 @@ router.get('/customer/all', function(req,res){
         res.status(500).json({message:e})
     })
 })
+
+router.get('/customer/single/:id', function(req,res){
+    const cid = req.params.id;
+    Customer.findOne({_id:cid})
+    .then(function(CustomerData){
+        res.status(200).json({success:true, data:CustomerData})
+})
+.catch(function(e){
+    res.status(500).json({message:e})
+})
+})
+
+
 module.exports = router;
