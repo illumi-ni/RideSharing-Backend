@@ -20,11 +20,14 @@ router.post('/customer/insert', [
         const email = req.body.email;
         const contact = req.body.contact;
         const gender = req.body.gender;
+        const photo = req.body.photo;
 
-        const CustomerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender });
+        // console.log(req.body)
+
+        const CustomerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender, photo:photo});
         CustomerData.save().then(function (result) {
             res.status(201).json({ success: true, message: "Customer Registered!!" });
-        }).catch(function (err) {
+        }).catch(function (err) { 
             res.status(500).json({ success: false, message: err });
         });
 
