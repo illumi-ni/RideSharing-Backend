@@ -21,8 +21,9 @@ router.post('/customer/insert', [
         const email = req.body.email;
         const contact = req.body.contact;
         const gender = req.body.gender;
+        const phone = req.body.phone;
 
-        const CustomerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender });
+        const CustomerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender, phone:phone });
         CustomerData.save().then(function (result) {
             res.status(201).json({ success: true, message: "Customer Registered!!" });
         }).catch(function (err) {
@@ -85,16 +86,18 @@ router.get('/customer/all', function(req,res){
     })
 })
 
-router.get('/customer/single/:id', function(req,res){
-    const cid = req.params.id;
+router.get('/customer/single', auth.checkCustomer  ,function(req,res){
+    const cid = req.customerData._id;
     Customer.findOne({_id:cid})
-    .then(function(CustomerData){
-        res.status(200).json({success:true, data:CustomerData})
+    .then(function(customerData){
+        res.status(200).json({success:true, customerData:customerData})
 })
 .catch(function(e){
-    res.status(500).json({message:e})
+    res.status(500).json({message:e, success: false})
 })
 })
+
+
 
 
 module.exports = router;

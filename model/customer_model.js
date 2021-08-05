@@ -24,6 +24,9 @@ const Customer = mongoose.model('Customer', {
     gender: {
         type: String,
         required: true
+    },
+    photo:{
+        type:String
     }
 });
 
