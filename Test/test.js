@@ -77,16 +77,30 @@ afterAll(async () => {
 // });
 
 //Advance Booking Testing
-it("Checking the Advance Booking", () => {
-    const advanceBook = {
-        'fullname': 'Rahul Roy',
-        'phone': '9812631351',
-        'from': 'Gushala',
-        'to': 'Kalimati',
-        'dob': '1-08-1999',
-        'time': '11:00 AM',
+// it("Checking the Advance Booking", () => {
+//     const advanceBook = {
+//         'fullname': 'Rahul Roy',
+//         'phone': '9812631351',
+//         'from': 'Gushala',
+//         'to': 'Kalimati',
+//         'dob': '1-08-1999',
+//         'time': '11:00 AM',
+//     };
+//     return AdvanceBook.create(advanceBook).then((result) => {
+//         expect(result.fullname).toEqual('Rahul Roy');
+//     });
+// })
+
+//Customer detail testing
+it("Checking the Customer detail", () => {
+    const customer = {
+        'fullname': 'Reshika Shrestha',
+        'email': 'shresthareshika@gmail.com',
+        'contact': '8219836918',
+        'gender': 'female',
     };
-    return AdvanceBook.create(advanceBook).then((result) => {
-        expect(result.fullname).toEqual('Rahul Roy');
+    return Customer.create(customer).then((result) => {
+        expect(result.fullname).toEqual('Reshika Shrestha');
     });
 })
+
