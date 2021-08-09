@@ -92,15 +92,35 @@ afterAll(async () => {
 // })
 
 //Customer detail testing
-it("Checking the Customer detail", () => {
-    const customer = {
+// it("Checking the Customer detail", () => {
+//     const customer = {
+//         'fullname': 'Reshika Shrestha',
+//         'email': 'shresthareshika@gmail.com',
+//         'contact': '8219836918',
+//         'gender': 'female',
+//     };
+//     return Customer.create(customer).then((result) => {
+//         expect(result.fullname).toEqual('Reshika Shrestha');
+//     });
+// })
+
+//Driver detail testing
+it("Checking the Driver detail", () => {
+    const driver = {
         'fullname': 'Reshika Shrestha',
         'email': 'shresthareshika@gmail.com',
-        'contact': '8219836918',
-        'gender': 'female',
+        'username': 'reshika',
+        'password': '12345',
+        'phone': '97865432',
+        'citizenship': '123243353645',
+        'licence': '821-983-6918',
+        'dob': '10-12-2000',
+        'vechileNo': '9876',
+        'model': 'tesla',
     };
-    return Customer.create(customer).then((result) => {
+    return Driver.create(driver).then((result) => {
         expect(result.fullname).toEqual('Reshika Shrestha');
     });
 })
+
 
