@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-const ws = require('ws');
+// // const ws = require('ws');
 
 const app = express();
 app.use(cors());
@@ -15,6 +15,7 @@ const driver_route = require('./route/driver_route');
 const route_customer = require('./route/customer_route');
 const admin_route = require('./route/admin_route');
 const booking_route = require('./route/bookingAdvance_route');
+// const { Server } = require('http');
 
 app.use(express.static("images"));
 app.use(driver_route);
@@ -27,27 +28,29 @@ const server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
-const wsServer = new ws.Server({ noServer: true });
+const socket = require('socket.io')
+const io = socket(server)
 
-wsServer.on('connection', socket => {
-  console.log("New user connected");
-  
-  socket.on('message', function incoming(data) {
-    // const obj = JSON.parse({ data })
-    console.log(data)
+// var io = socketio.listen(server)
+
+io.sockets.on('connection', function (client) {
+
+  console.log("client connected: " + client.id);
+
+  client.on("message", function (data) {
+
+    const data1 = JSON.parse(data)
+    console.log(data1);
+
+    // sending to all clients except sender
+    client.broadcast.emit('broadcast', data1);
+    // console.log("Message To: " + data.toName);
+
+
+    // io.sockets.socket(chatMessage.toClientID).emit("chatMessage", {"fromName" : data.fromName,
+    //                                                             "toName" : data.toName,
+    //                                                             "toClientID" : data.toClientID,
+    //                                                             "msg" : data.msg});
+
   });
-
-  // socket.send("Hello from the server");
-
-  // const cus = new Customer({ fullname: "fullname", email: "email", contact: "contact", gender: "gender" });
-  // socket.send(JSON.stringify(cus));
-});
-
-// `server` is a vanilla Node.js HTTP server, so use
-// the same ws upgrade process described here:
-// https://www.npmjs.com/package/ws#multiple-servers-sharing-a-single-https-server
-server.on('upgrade', (request, socket, head) => {
-  wsServer.handleUpgrade(request, socket, head, socket => {
-    wsServer.emit('connection', socket, request);
-  });
-});
+})
