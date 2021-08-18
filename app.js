@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const Driver = require("./model/driver_model")
 // // const ws = require('ws');
 
 const app = express();
@@ -33,7 +34,7 @@ const io = socket(server)
 
 // var io = socketio.listen(server)
 
-io.sockets.on('connection', function (client) {
+io.sockets.on('connection',  function (client) {
 
   console.log("client connected: " + client.id);
 
@@ -43,9 +44,17 @@ io.sockets.on('connection', function (client) {
     console.log(data1);
 
     // sending to all clients except sender
-    client.broadcast.emit('broadcast', data1);
+    drivers = Driver.find({}).then((driver)=>{
+      driver.forEach((d, key)=>{
+        console.log("Broadcast to: "+ "driver_"+d._id)
+        client.broadcast.emit("driver_"+d._id, data1);
+      })
+      
+    })
+    // 
+    // client.broadcast.emit('driver', data1);
+    // client.broadcast.emit('broadcast', data1);
     // console.log("Message To: " + data.toName);
-
 
     // io.sockets.socket(chatMessage.toClientID).emit("chatMessage", {"fromName" : data.fromName,
     //                                                             "toName" : data.toName,
