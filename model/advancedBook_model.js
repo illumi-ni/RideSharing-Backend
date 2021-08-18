@@ -5,14 +5,9 @@ const AdvanceBook = mongoose.model('AdvanceBook',{
         type: String, 
         required: true  
     },
-    phone: {
-        type: String,
-        required :true
-    },
     from:{
         type: String,
-        required : true
-        
+          
     },
     to:{
         type:String

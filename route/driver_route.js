@@ -6,8 +6,8 @@ const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
 //register for driver
-router.post('/admin/register', upload.single('licence'), function (req, res) {
-    if (req.file == undefined) {
+router.post('/admin/register', upload.fields([{ name: 'photo', maxCount: 1 }, { name: 'licence', maxCount: 1 }]), function (req, res) {
+    if (req.files == undefined) {
         return res.status(400).json({ message: "Invalid field format" });
     }
 
@@ -21,6 +21,8 @@ router.post('/admin/register', upload.single('licence'), function (req, res) {
     const dob = req.body.dob;
     const vechileNo = req.body.vechileNo;
     const model = req.body.model;
+    const brand = req.body.brand;
+    const photo= req.body.photo;
 
     console.log(req.body)
 
@@ -28,7 +30,7 @@ router.post('/admin/register', upload.single('licence'), function (req, res) {
     bcryptjs.hash(password, 10, function (err, hash) {
         const driverData = new Driver({
             fullname: fullname, email: email, username: username, password: hash,
-            phone: phone, citizenship: citizenship, licence: req.file.filename, dob: dob, vechileNo: vechileNo, model: model
+            phone: phone, citizenship: citizenship, licence:  req.files.licence[0].filename, dob: dob, vechileNo: vechileNo, model: model, brand:brand, photo:req.files.photo[0].filename
         });
         driverData.save().then(function (result) {
             res.status(201).json({ success: true, message: "Driver Registration has been successfully inserted!!!" });

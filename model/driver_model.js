@@ -27,7 +27,8 @@ const Driver = mongoose.model('Driver', {
 
     },
     licence: {
-        type: String
+        type: String,
+        required: true
     },
     dob: {
         type: String,
@@ -35,11 +36,14 @@ const Driver = mongoose.model('Driver', {
     },
     vechileNo: {
         type: String,
-        required: true
+        
     },
     model: {
         type: String,
         required: true
+    },
+    photo:{
+        type:String
     }
 });
 
