@@ -7,7 +7,6 @@ const auth = require('../middleware/auth');
 router.post('/customer/booking', function (req, res) {
  
     const fullname = req.body.fullname;
-    const phone = req.body.phone;
     const from = req.body.from;
     const to = req.body.to;
     const date = req.body.date;
@@ -16,7 +15,7 @@ router.post('/customer/booking', function (req, res) {
     const price = req.body.price;
 
     const BookingData = new AdvanceBook({
-        fullname: fullname, phone: phone, from: from, to: to, date: date, time: time, distance: distance, 
+        fullname: fullname, from: from, to: to, date: date, time: time, distance: distance, 
         price: price
     });
 
@@ -55,7 +54,6 @@ router.put('/update/booking',function(req, res){
     
     const id = req.body.id;
     const fullname = req.body.fullname;
-    const phone = req.body.phone;
     const from = req.body.from;
     const to = req.body.to;
     const date = req.body.date;
@@ -63,7 +61,7 @@ router.put('/update/booking',function(req, res){
     const distance = req.body.distance;
     const price = req.body.price;
 
-    AdvanceBook.updateOne({_id: id}, { fullname: fullname, phone: phone, from: from, to: to, date: date, time: time, distance: distance, 
+    AdvanceBook.updateOne({_id: id}, { fullname: fullname, from: from, to: to, date: date, time: time, distance: distance, 
         price: price})
     .then(function(result){
         res.status(200).json({message: "Booking updated!!", success: true});
