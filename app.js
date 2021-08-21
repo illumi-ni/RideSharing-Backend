@@ -43,23 +43,22 @@ io.sockets.on('connection',  function (client) {
     const data1 = JSON.parse(data)
     console.log(data1);
 
-    // sending to all clients except sender
+    // sending to all drivers except sender
     drivers = Driver.find({}).then((driver)=>{
       driver.forEach((d, key)=>{
-        console.log("Broadcast to: "+ "driver_"+d._id)
+        // console.log("Broadcast to: "+ "driver_"+d._id)
+        console.log
         client.broadcast.emit("driver_"+d._id, data1);
+        // // client.sockets.socket(d);
+        
       })
-      
-    })
-    // 
-    // client.broadcast.emit('driver', data1);
-    // client.broadcast.emit('broadcast', data1);
-    // console.log("Message To: " + data.toName);
-
-    // io.sockets.socket(chatMessage.toClientID).emit("chatMessage", {"fromName" : data.fromName,
-    //                                                             "toName" : data.toName,
-    //                                                             "toClientID" : data.toClientID,
-    //                                                             "msg" : data.msg});
-
+    })                                             
   });
+
+  client.on("accept", function (ad) {
+    const adData = JSON.parse(ad)
+    client.broadcast.emit('accepted', adData);
+    console.log(adData);
+  })
+  
 })
