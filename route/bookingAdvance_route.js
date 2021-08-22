@@ -72,9 +72,9 @@ router.put('/update/booking',function(req, res){
 })
 
 
-router.delete('/delete/booking/:id', function (req, res) {
-    const id = req.params.id;
-    AdvanceBook.deleteOne({ _id: id })
+router.delete('/delete/booking/:fullname', function (req, res) {
+    const fullname = req.params.fullname;
+    AdvanceBook.deleteOne({ fullname: fullname })
         .then(function (result) {
             res.status(200).json({ message: "Deleted Successfully!!", status: "true" });
         })

@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const otp = require('./OTPverify');
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const upload = require('../middleware/upload');
 
 //Customer Sign up
 router.post('/customer/insert', [
@@ -86,4 +87,46 @@ router.get('/customer/all', function(req,res){
         res.status(500).json({message:e})
     })
 })
+
+router.get('/customer/single/:email', function(req,res){
+    const Cemail = req.params.email;
+    Customer.findOne({email:Cemail})
+    .then(function(ConsumerData){
+        res.status(200).json(ConsumerData)
+    })
+    .catch(function(e){
+        res.status(500).json({message:e})
+    })
+})
+
+
+router.put('/consumer_update', function (req, res) {
+    const consumer_id = req.params.id
+   
+    const fullname = req.body.fullname;
+        const email = req.body.email;
+        const contact = req.body.contact;
+        const gender = req.body.gender;
+        const photo = req.body.photo;
+
+    Consumer.updateOne({ _id: consumer_id }, {
+        fullname: fullname, email: email, contact: contact, gender: gender, photo:photo  })
+        .then(function () {
+        console.log("updated")
+    })
+})
+router.put('/user/updateImage', upload.single('photo'), function (req, res) {
+    const id = req.params._id;
+    const photo = req.file.filename;
+    console.log(req.file)
+    User.updateOne({ _id: id }, {
+        photo: photo
+    }).then(function (result) {
+        res.status(200).json({ success: "true", message: "Image updated" })
+    })
+        .catch(function (e) {
+            res.status(500).json(e)
+        })
+})
+
 module.exports = router;
