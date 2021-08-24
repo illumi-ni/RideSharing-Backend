@@ -102,8 +102,21 @@ router.get('/customer/single/:email', function(req,res){
 })
 
 
+router.get('/customer1/single', auth.checkCustomer,function(req,res){
+    const Cemail = req.CustomerData.email;
+    console.log(Cemail)
+    Customer.findOne({email:Cemail})
+    .then(function(CustomerData){
+        console.log(CustomerData)
+        res.status(200).json({ CustomerData: CustomerData })
+    })
+    .catch(function(e){
+        res.status(500).json({message:e})
+    })
+})
+
 router.put('/consumer_update', function (req, res) {
-    const consumer_id = req.params.id
+    const id = req.params.id
    
     const fullname = req.body.fullname;
         const email = req.body.email;
@@ -111,7 +124,7 @@ router.put('/consumer_update', function (req, res) {
         const gender = req.body.gender;
         const photo = req.body.photo;
 
-    Consumer.updateOne({ _id: consumer_id }, {
+    Customer.updateOne({ _id: id }, {
         fullname: fullname, email: email, contact: contact, gender: gender, photo:photo  })
         .then(function () {
         console.log("updated")

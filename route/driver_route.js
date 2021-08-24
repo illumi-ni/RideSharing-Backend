@@ -80,4 +80,15 @@ router.get('/driver/all', function(req,res){
     })
 })
 
+router.delete('/delete/driver/:did', function (req, res) {
+    const did = req.params.did;
+    Driver.deleteOne({ _id: did })
+        .then(function (result) {
+            res.status(200).json({ message: "Deleted Successfully!!", status: "true" });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e, status: "false" });
+        })
+})
+
 module.exports = router;

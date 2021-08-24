@@ -38,6 +38,16 @@ router.get('/booking/all', function(req,res){
     })
 })
 
+router.get('/booking/single/:id', function(req,res){
+    const pid = req.params.id;
+    AdvanceBook.findOne({_id:pid})
+    .then(function(BookingData){
+        res.status(200).json(BookingData)
+    })
+    .catch(function(e){
+        res.status(500).json({message:e})
+    })
+})
 router.get('/booking/single/:fullname', function(req,res){
     const pid = req.params.fullname;
     AdvanceBook.findOne({fullname:pid})
@@ -50,8 +60,6 @@ router.get('/booking/single/:fullname', function(req,res){
 })
 
 router.put('/update/booking',function(req, res){
-    // console.log(req.body)
-    
     const id = req.body.id;
     const fullname = req.body.fullname;
     const from = req.body.from;
@@ -72,9 +80,9 @@ router.put('/update/booking',function(req, res){
 })
 
 
-router.delete('/delete/booking/:fullname', function (req, res) {
-    const fullname = req.params.fullname;
-    AdvanceBook.deleteOne({ fullname: fullname })
+router.delete('/delete/booking/:bid', function (req, res) {
+    const bid = req.params.bid;
+    AdvanceBook.deleteOne({ _id: bid })
         .then(function (result) {
             res.status(200).json({ message: "Deleted Successfully!!", status: "true" });
         })
