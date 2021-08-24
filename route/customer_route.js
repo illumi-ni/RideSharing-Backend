@@ -25,8 +25,8 @@ router.post('/customer/insert', [
 
         // console.log(req.body)
 
-        const CustomerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender, photo:photo});
-        CustomerData.save().then(function (result) {
+        const customerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender, photo:photo});
+        customerData.save().then(function (result) {
             res.status(201).json({ success: true, message: "Customer Registered!!" });
         }).catch(function (err) { 
             res.status(500).json({ success: false, message: err });

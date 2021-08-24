@@ -16,6 +16,7 @@ const driver_route = require('./route/driver_route');
 const route_customer = require('./route/customer_route');
 const admin_route = require('./route/admin_route');
 const booking_route = require('./route/bookingAdvance_route');
+const contact_route = require('./route/contact_route');
 // const { Server } = require('http');
 
 app.use(express.static("images"));
@@ -23,6 +24,7 @@ app.use(driver_route);
 app.use(route_customer);
 app.use(admin_route);
 app.use(booking_route);
+app.use(contact_route);
 
 const PORT = process.env.PORT || 90;
 const server = app.listen(PORT, () => {
