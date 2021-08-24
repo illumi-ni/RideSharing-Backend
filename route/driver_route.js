@@ -4,6 +4,7 @@ const Driver = require('../model/driver_model');
 const upload = require('../middleware/upload');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
+const auth = require('../middleware/auth');
 
 //register for driver
 router.post('/admin/register', upload.fields([{ name: 'photo', maxCount: 1 }, { name: 'licence', maxCount: 1 }]), function (req, res) {
@@ -78,6 +79,19 @@ router.get('/driver/all', function(req,res){
     .catch(function(e){
         res.status(500).json({message:e})
     })
+})
+
+router.get('/driver/single', auth.checkDriver, function(req,res){
+    const id = req.driverData._id
+    // console.log(id)
+    Driver.findOne({ _id: id })
+        .then(function (driverData) {
+            res.status(200).json({success: true, driverData:driverData});
+            // console.log(data)
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e, success: false });
+        })
 })
 
 router.delete('/delete/driver/:did', function (req, res) {
