@@ -77,16 +77,50 @@ afterAll(async () => {
 // });
 
 //Advance Booking Testing
-it("Checking the Advance Booking", () => {
-    const advanceBook = {
-        'fullname': 'Rahul Roy',
-        'phone': '9812631351',
-        'from': 'Gushala',
-        'to': 'Kalimati',
-        'dob': '1-08-1999',
-        'time': '11:00 AM',
+// it("Checking the Advance Booking", () => {
+//     const advanceBook = {
+//         'fullname': 'Rahul Roy',
+//         'phone': '9812631351',
+//         'from': 'Gushala',
+//         'to': 'Kalimati',
+//         'dob': '1-08-1999',
+//         'time': '11:00 AM',
+//     };
+//     return AdvanceBook.create(advanceBook).then((result) => {
+//         expect(result.fullname).toEqual('Rahul Roy');
+//     });
+// })
+
+//Customer detail testing
+// it("Checking the Customer detail", () => {
+//     const customer = {
+//         'fullname': 'Reshika Shrestha',
+//         'email': 'shresthareshika@gmail.com',
+//         'contact': '8219836918',
+//         'gender': 'female',
+//     };
+//     return Customer.create(customer).then((result) => {
+//         expect(result.fullname).toEqual('Reshika Shrestha');
+//     });
+// })
+
+//Driver detail testing
+it("Checking the Driver detail", () => {
+    const driver = {
+        'fullname': 'Reshika Shrestha',
+        'email': 'shresthareshika@gmail.com',
+        'username': 'reshika',
+        'password': '12345',
+        'phone': '97865432',
+        'citizenship': '123243353645',
+        'licence': '821-983-6918',
+        'dob': '10-12-2000',
+        'vechileNo': '9876',
+        'model': 'tesla',
     };
-    return AdvanceBook.create(advanceBook).then((result) => {
-        expect(result.fullname).toEqual('Rahul Roy');
+    return Driver.create(driver).then((result) => {
+        expect(result.fullname).toEqual('Reshika Shrestha');
     });
 })
+
+
