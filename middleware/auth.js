@@ -7,9 +7,9 @@ module.exports.checkCustomer = function (req, res, next) {
     try {
         const token = req.headers.authorization.split(" ")[1];
         const verifiedData = jwt.verify(token, 'Secretkey');
-        Customer.findOne({ _id: verifiedData.userID })
+        Customer.findOne({ _id: verifiedData.customerID })
             .then(function (userInfo) {
-                req.userData = userInfo;
+                req.customerData = userInfo;
                 next();
             })
             .catch(function (e) {

@@ -71,7 +71,7 @@ router.post('/checkEmail', function (req, res) {
     const email = req.body.email;
 
     Customer.findOne({ email: email }).then(function (customerData) {
-        const token = jwt.sign({ customerID: customerData._id }, 'Sercretkey');
+        const token = jwt.sign({ customerID: customerData._id }, 'Secretkey');
         res.status(200).json({ success: true, token: token, customerData: customerData });
     }).catch(function (err) {
         res.status(500).json({ success: false, message: err });
@@ -102,13 +102,14 @@ router.get('/customer/single/:email', function(req,res){
 })
 
 
-router.get('/customer1/single', auth.checkCustomer,function(req,res){
-    const Cemail = req.CustomerData.email;
-    console.log(Cemail)
-    Customer.findOne({email:Cemail})
-    .then(function(CustomerData){
-        console.log(CustomerData)
-        res.status(200).json({ CustomerData: CustomerData })
+router.get('/customer/details', auth.checkCustomer, function(req,res){
+    console.log(req.customerData._id)
+    const id = req.customerData._id;
+   
+    Customer.findOne({_id: id})
+    .then(function(customerData){
+        console.log(customerData)
+        res.status(200).json({ success: true, customerData: customerData })
     })
     .catch(function(e){
         res.status(500).json({message:e})
