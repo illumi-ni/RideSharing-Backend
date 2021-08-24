@@ -25,9 +25,9 @@ module.exports.checkDriver = function (req, res, next) {
     try {
         const token = req.headers.authorization.split(" ")[1];
         const verifiedData = jwt.verify(token, 'Secretkey');
-        Driver.findOne({ _id: verifiedData.userID })
+        Driver.findOne({ _id: verifiedData.driverID })
             .then(function (userInfo) {
-                req.userData = userInfo;
+                req.driverData = userInfo;
                 next();
             })
             .catch(function (e) {

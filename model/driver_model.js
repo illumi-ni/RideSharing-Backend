@@ -30,7 +30,7 @@ const Driver = mongoose.model('Driver', {
         type: String,
         required: true
     },
-    dob: {
+    gender: {
         type: String,
         required: true
     },

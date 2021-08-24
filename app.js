@@ -49,8 +49,6 @@ io.sockets.on('connection',  function (client) {
         // console.log("Broadcast to: "+ "driver_"+d._id)
         console.log
         client.broadcast.emit("driver_"+d._id, data1);
-        // // client.sockets.socket(d);
-        
       })
     })                                             
   });
