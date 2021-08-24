@@ -90,9 +90,11 @@ router.get('/customer/all', function(req,res){
 
 router.get('/customer/single/:email', function(req,res){
     const Cemail = req.params.email;
+    console.log(Cemail)
     Customer.findOne({email:Cemail})
     .then(function(ConsumerData){
-        res.status(200).json(ConsumerData)
+        console.log(ConsumerData)
+        res.status(200).json({ CustomerData: ConsumerData })
     })
     .catch(function(e){
         res.status(500).json({message:e})
