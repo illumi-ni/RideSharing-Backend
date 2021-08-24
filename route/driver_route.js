@@ -82,8 +82,8 @@ router.get('/driver/all', function(req,res){
 })
 
 router.get('/driver/single', auth.checkDriver, function(req,res){
-    console.log(req.driverData._id)
-    const id = req.driverData._id;
+    const id = req.driverData._id
+    // console.log(id)
     Driver.findOne({ _id: id })
         .then(function (driverData) {
             res.status(200).json({success: true, driverData:driverData});
@@ -91,6 +91,17 @@ router.get('/driver/single', auth.checkDriver, function(req,res){
         })
         .catch(function (e) {
             res.status(500).json({ message: e, success: false });
+        })
+})
+
+router.delete('/delete/driver/:did', function (req, res) {
+    const did = req.params.did;
+    Driver.deleteOne({ _id: did })
+        .then(function (result) {
+            res.status(200).json({ message: "Deleted Successfully!!", status: "true" });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e, status: "false" });
         })
 })
 
