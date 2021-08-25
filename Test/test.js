@@ -4,6 +4,7 @@ const Customer = require('../model/customer_model');
 const Admin = require('../model/admin_model');
 const otp = require('../route/OTPverify');
 const AdvanceBook = require('../model/advancedBook_model')
+const Contact=require('../model/Contact_Model')
 const url = 'mongodb://127.0.0.1:27017/RideSharing_TestDB';
 
 beforeAll(async () => {
@@ -76,7 +77,7 @@ afterAll(async () => {
 //     });
 // });
 
-//Advance Booking Testing
+// // Advance Booking Testing
 // it("Checking the Advance Booking", () => {
 //     const advanceBook = {
 //         'fullname': 'Rahul Roy',
@@ -91,7 +92,7 @@ afterAll(async () => {
 //     });
 // })
 
-//Customer detail testing
+// // Customer detail testing
 // it("Checking the Customer detail", () => {
 //     const customer = {
 //         'fullname': 'Reshika Shrestha',
@@ -104,23 +105,38 @@ afterAll(async () => {
 //     });
 // })
 
-//Driver detail testing
-it("Checking the Driver detail", () => {
-    const driver = {
+// // Driver detail testing
+// it("Checking the Driver detail", () => {
+//     const driver = {
+//         'fullname': 'Reshika Shrestha',
+//         'email': 'shresthareshika@gmail.com',
+//         'username': 'reshika',
+//         'password': '12345',
+//         'phone': '97865432',
+//         'citizenship': '123243353645',
+//         'licence': '821-983-6918',
+//         'dob': '10-12-2000',
+//         'vechileNo': '9876',
+//         'model': 'tesla',
+//     };
+//     return Driver.create(driver).then((result) => {
+//         expect(result.fullname).toEqual('Reshika Shrestha');
+//     });
+// })
+
+//Contact Testing
+it("Checking the Contact", () => {
+    const contact = {
         'fullname': 'Reshika Shrestha',
         'email': 'shresthareshika@gmail.com',
-        'username': 'reshika',
-        'password': '12345',
-        'phone': '97865432',
-        'citizenship': '123243353645',
-        'licence': '821-983-6918',
-        'dob': '10-12-2000',
-        'vechileNo': '9876',
-        'model': 'tesla',
+        'subject': 'Hello',
+        'message': 'Hello',
     };
-    return Driver.create(driver).then((result) => {
+    return Contact.create(contact).then((result) => {
         expect(result.fullname).toEqual('Reshika Shrestha');
     });
 })
+
+
 
 
