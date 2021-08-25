@@ -126,7 +126,7 @@ router.put('/customer/update',  upload.single('photo'), function (req, res) {
     const photo = req.body.photo;
     
 
-    User.updateOne({ _id: id }, { fullName: fullname, email: email, contact: contact, gender:gender,photo: req.file.filename })
+    Customer.updateOne({ _id: id }, { fullName: fullname, email: email, contact: contact, gender:gender,photo: req.file.filename })
         .then(function (result) {
             res.status(201).json({ messsage: "Customer updated!!", success: true })
 
@@ -136,11 +136,11 @@ router.put('/customer/update',  upload.single('photo'), function (req, res) {
     })
 
 })
-router.put('/user/updateImage', upload.single('photo'), function (req, res) {
+router.put('/customer/updateImage', upload.single('photo'), function (req, res) {
     const id = req.params._id;
     const photo = req.file.filename;
     console.log(req.file)
-    User.updateOne({ _id: id }, {
+    Customer.updateOne({ _id: id }, {
         photo: photo
     }).then(function (result) {
         res.status(200).json({ success: "true", message: "Image updated" })
