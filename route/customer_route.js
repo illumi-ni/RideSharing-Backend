@@ -124,9 +124,11 @@ router.put('/customer/update',  upload.single('photo'), function (req, res) {
     const contact = req.body.contact;
     const gender = req.body.gender;
     const photo = req.body.photo;
+
+    console.log(req.file)
     
 
-    Customer.updateOne({ _id: id }, { fullName: fullname, email: email, contact: contact, gender:gender,photo: req.file.filename })
+    Customer.updateOne({ _id: id }, { fullName: fullname, email: email, contact: contact, gender:gender,photo: photo })
         .then(function (result) {
             res.status(201).json({ messsage: "Customer updated!!", success: true })
 
