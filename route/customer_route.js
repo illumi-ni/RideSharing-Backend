@@ -11,7 +11,7 @@ const upload = require('../middleware/upload');
 router.post('/customer/insert', [
     check('fullname', "Please enter your name").not().isEmpty(),
     check('email', "Invalid Email address").isEmail(),
-    check('contact', "Contact is required").not().isEmpty(),
+    check('phone', "phone is required").not().isEmpty(),
     check('gender', "Please choose a gender").not().isEmpty()
 ], function (req, res) {
     const errors = validationResult(req);
@@ -19,13 +19,13 @@ router.post('/customer/insert', [
     if (errors.isEmpty()) {
         const fullname = req.body.fullname;
         const email = req.body.email;
-        const contact = req.body.contact;
+        const phone = req.body.phone;
         const gender = req.body.gender;
         const photo = req.body.photo;
 
         // console.log(req.body)
 
-        const customerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender, photo:photo});
+        const customerData = new Customer({ fullname: fullname, email: email, phone: phone, gender: gender, photo:photo});
         customerData.save().then(function (result) {
             res.status(201).json({ success: true, message: "Customer Registered!!" });
         }).catch(function (err) { 
@@ -121,28 +121,51 @@ router.put('/consumer_update', function (req, res) {
    
     const fullname = req.body.fullname;
         const email = req.body.email;
-        const contact = req.body.contact;
+        const phone = req.body.phone;
         const gender = req.body.gender;
         const photo = req.body.photo;
 
     Customer.updateOne({ _id: id }, {
-        fullname: fullname, email: email, contact: contact, gender: gender, photo:photo  })
+        fullname: fullname, email: email, phone: phone, gender: gender, photo:photo  })
         .then(function () {
         console.log("updated")
     })
 })
-router.put('/user/updateImage', upload.single('photo'), function (req, res) {
-    const id = req.params._id;
-    const photo = req.file.filename;
-    console.log(req.file)
-    User.updateOne({ _id: id }, {
-        photo: photo
-    }).then(function (result) {
-        res.status(200).json({ success: "true", message: "Image updated" })
+
+router.put('/customer/update/:id', auth.checkCustomer, function (req, res) {
+    const id = req.params.id
+    const fullname = req.body.fullname;
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const gender = req.body.gender;
+    const photo = req.body.photo;
+
+    console.log(id, fullname, email, phone, gender)
+
+    Customer.updateOne({ _id: id }, {
+        fullname: fullname, email: email, phone: phone, gender: gender
     })
-        .catch(function (e) {
-            res.status(500).json(e)
-        })
+    .then(function (result) {
+        res.status(200).json({ message: "Customer updated", success: true })
+    }).catch(function (e) {
+        res.status(500).json({ message: e, success: false })
+    })
+ 
+})
+
+router.put('/customer/updateImage', auth.checkCustomer, upload.single('photo'), function (req, res) {
+    const id = req.customerData._id;
+    if (req.file == undefined) {
+        console.log(req.file);
+        return res.status(201).json({ success: false, message: "Invalid  file format" })
+    }
+    Customer.updateOne({ _id: id }, {
+        photo: req.file.path
+    }).then(function (data) {
+        res.status(200).json({ message: 'image updated', success: true })
+    }).catch(function (err) {
+        res.send.status(500).json({ message: err , success: false})
+    });
 })
 
 module.exports = router;

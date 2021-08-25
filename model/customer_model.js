@@ -16,7 +16,7 @@ const Customer = mongoose.model('Customer', {
             }
         }
     },
-    contact: {
+    phone: {
         type: String,
         required: true
     },
@@ -25,7 +25,8 @@ const Customer = mongoose.model('Customer', {
         required: true
     },
     photo:{
-        type: String
+        type: String,
+        default:""
     }
 });
 
