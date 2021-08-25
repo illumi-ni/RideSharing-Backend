@@ -25,7 +25,8 @@ const Customer = mongoose.model('Customer', {
         required: true
     },
     photo:{
-        type: String
+        type: String,
+        default:""
     }
 });
 

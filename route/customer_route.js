@@ -116,28 +116,26 @@ router.get('/customer/details', auth.checkCustomer, function(req,res){
     })
 })
 
+router.put('/customer/update',  upload.single('photo'), function (req, res) {
 
-
-// router.put('/customer/update',  upload.single('photo'), function (req, res) {
-
-//     const id = req.body.id;
-//     const fullname = req.body.fullname;
-//     const email = req.body.email;
-//     const contact = req.body.contact;
-//     const gender = req.body.gender;
-//     const photo = req.body.photo;
+    const id = req.body.id;
+    const fullname = req.body.fullname;
+    const email = req.body.email;
+    const contact = req.body.contact;
+    const gender = req.body.gender;
+    const photo = req.body.photo;
     
 
-//     Customer.updateOne({ _id: id }, { fullName: fullname, email: email, contact: contact, gender:gender, photo: req.file.filename, })
-//         .then(function (result) {
-//             res.status(201).json({ messsage: "Customer updated!!", success: true })
+    User.updateOne({ _id: id }, { fullName: fullname, email: email, contact: contact, gender:gender,photo: req.file.filename })
+        .then(function (result) {
+            res.status(201).json({ messsage: "Customer updated!!", success: true })
 
-//         })
-//         .catch(function (err) {
-//             res.status(500).json({ messsage: err, success: false })
-//     })
+        })
+        .catch(function (err) {
+            res.status(500).json({ messsage: err, success: false })
+    })
 
-// })
+})
 router.put('/user/updateImage', upload.single('photo'), function (req, res) {
     const id = req.params._id;
     const photo = req.file.filename;
