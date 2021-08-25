@@ -152,4 +152,25 @@ router.put('/customer/updateImage', upload.single('photo'), function (req, res) 
         })
 })
 
+router.put('/customer/update/:id', auth.checkCustomer, function (req, res) {
+    const id = req.params.id
+    const fullname = req.body.fullname;
+    const email = req.body.email;
+    const contact = req.body.contact;
+    const gender = req.body.gender;
+    const photo = req.body.photo;
+
+    console.log(id, fullname, email, contact, gender)
+
+    Customer.updateOne({ _id: id }, {
+        fullname: fullname, email: email, contact: contact, gender: gender
+    })
+    .then(function (result) {
+        res.status(200).json({ message: "Customer updated", success: true })
+    }).catch(function (e) {
+        res.status(500).json({ message: e, success: false })
+    })
+    // console.log(profileimg)
+})
+
 module.exports = router;
