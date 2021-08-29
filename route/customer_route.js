@@ -138,18 +138,19 @@ router.put('/customer/update',  upload.single('photo'), function (req, res) {
     })
 
 })
-router.put('/customer/updateImage', upload.single('photo'), function (req, res) {
-    const id = req.params._id;
-    const photo = req.file.filename;
-    console.log(req.file)
+router.put('/customer/updateImage', auth.checkCustomer, upload.single('photo'), function (req, res) {
+    const id = req.customerData._id;
+    if (req.file == undefined) {
+        console.log(req.file);
+        return res.status(201).json({ success: false, message: "Invalid  file format" })
+    }
     Customer.updateOne({ _id: id }, {
-        photo: photo
-    }).then(function (result) {
-        res.status(200).json({ success: "true", message: "Image updated" })
-    })
-        .catch(function (e) {
-            res.status(500).json(e)
-        })
+        photo: req.file.path
+    }).then(function (data) {
+        res.status(200).json({ message: 'image updated', success: true })
+    }).catch(function (err) {
+        res.send.status(500).json({ message: err , success: false})
+    });
 })
 
 router.put('/customer/update/:id', auth.checkCustomer, function (req, res) {
