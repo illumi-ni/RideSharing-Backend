@@ -7,6 +7,7 @@ const auth = require('../middleware/auth');
 router.post('/customer/booking', function (req, res) {
  
     const fullname = req.body.fullname;
+    const contact=req.body.contact;
     const from = req.body.from;
     const to = req.body.to;
     const date = req.body.date;
@@ -15,7 +16,7 @@ router.post('/customer/booking', function (req, res) {
     const price = req.body.price;
 
     const BookingData = new AdvanceBook({
-        fullname: fullname, from: from, to: to, date: date, time: time, distance: distance, 
+        fullname: fullname, contact:contact,from: from, to: to, date: date, time: time, distance: distance, 
         price: price
     });
 
