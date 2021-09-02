@@ -1,4 +1,4 @@
 const express = require('express');
 const router = express.Router();
-const Ride= require('../model/ride');
+const Ride= require('../model/ride_model');
 
