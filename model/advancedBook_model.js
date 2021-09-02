@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const AdvanceBook = mongoose.model('AdvanceBook',{
     fullname:{
         type: String, 
-        required: true  
+    },
+    contact:{
+        type:String, 
     },
     from:{
         type: String,
-          
     },
     to:{
         type:String
