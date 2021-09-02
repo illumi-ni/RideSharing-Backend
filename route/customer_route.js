@@ -145,7 +145,7 @@ router.put('/customer/updateImage', auth.checkCustomer, upload.single('photo'), 
         return res.status(201).json({ success: false, message: "Invalid  file format" })
     }
     Customer.updateOne({ _id: id }, {
-        photo: req.file.path
+        photo: req.file.filename
     }).then(function (data) {
         res.status(200).json({ message: 'image updated', success: true })
     }).catch(function (err) {
