@@ -49,6 +49,7 @@ router.get('/booking/single/:id', function(req,res){
         res.status(500).json({message:e})
     })
 })
+
 router.get('/booking/single/:fullname', function(req,res){
     const pid = req.params.fullname;
     AdvanceBook.findOne({fullname:pid})

@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
+const Driver = require('./driver_model');
+const Schema = mongoose.Schema;
 
 const Ride = mongoose.model('Ride',{
-    fullname:{
-        type: String, 
-        required: true  
-    },
     from:{
         type: String,
           
@@ -16,22 +14,20 @@ const Ride = mongoose.model('Ride',{
         type:String,
         required:true
     },
-    time: {
-        type:String,
-        required:true
-    },
     distance:{
         type:String,
         required:true
     },
     price:{
-        type:String
+        type: String
     },
-    photo:{
-        type:String
+    customerID:{
+        type: String,
+        required: true
     },
-    driver:{
-        driverID: { type: Schema.Types.ObjectId, ref: "drivers", required: true }
+    driverID:{
+        type: String,
+        required: true
     }
 });
 
