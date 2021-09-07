@@ -32,7 +32,7 @@ const Driver = mongoose.model('Driver', {
     },
     gender: {
         type: String,
-        required: true
+       
     },
     vechileNo: {
         type: String,
