@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const Driver = require("./model/driver_model")
+const Customer = require("./model/customer_model")
 // // const ws = require('ws');
 
 const app = express();
@@ -18,7 +19,6 @@ const admin_route = require('./route/admin_route');
 const booking_route = require('./route/bookingAdvance_route');
 const contact_route = require('./route/contact_route');
 // const { Server } = require('http');
-
 
 // app.use("/images", express.static(path.join(__dirname, "images")))
 app.use(express.static("images"));
@@ -38,6 +38,7 @@ const socket = require('socket.io')
 const io = socket(server)
 
 // var io = socketio.listen(server)
+let customerID;
 
 io.sockets.on('connection',  function (client) {
 
@@ -46,22 +47,39 @@ io.sockets.on('connection',  function (client) {
   client.on("message", function (data) {
 
     const data1 = JSON.parse(data)
-    console.log(data1);
+    customerID = data1.customerID;
 
     // sending to all drivers except sender
     drivers = Driver.find({}).then((driver)=>{
       driver.forEach((d, key)=>{
         // console.log("Broadcast to: "+ "driver_"+d._id)
-        console.log
         client.broadcast.emit("driver_"+d._id, data1);
       })
-    })                                             
+    })
   });
 
   client.on("accept", function (ad) {
     const adData = JSON.parse(ad)
-    client.broadcast.emit('accepted', adData);
-    console.log(adData);
-  })
+    client.broadcast.emit('accepted'+ customerID, adData); 
+  });
+
   
-})
+  client.on("invite", function (data) {
+
+    const data1 = JSON.parse(data)
+
+    // sending to all customers except sender
+    customers = Customer.find({}).then((customer)=>{
+      customer.forEach((cd, key)=>{
+        client.broadcast.emit("customer_"+cd._id, data1);
+        // console.log(cd._id)
+      })
+    }) 
+  });
+
+  client.on("join", function (cd) {
+    const cdData = JSON.parse(cd)
+    // console.log(cdData)
+    client.broadcast.emit('ridejoined'+ customerID, cdData); 
+  });
+});

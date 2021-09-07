@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
-const AdvanceBook = mongoose.model('AdvanceBook',{
+const Ride = mongoose.model('Ride',{
     fullname:{
         type: String, 
-    },
-    contact:{
-        type:String, 
+        required: true  
     },
     from:{
         type: String,
+          
     },
     to:{
         type:String
@@ -27,8 +26,13 @@ const AdvanceBook = mongoose.model('AdvanceBook',{
     },
     price:{
         type:String
-    } 
-    
+    },
+    photo:{
+        type:String
+    },
+    driver:{
+        driverID: { type: Schema.Types.ObjectId, ref: "drivers", required: true }
+    }
 });
 
-module.exports = AdvanceBook;
+module.exports = Ride;
