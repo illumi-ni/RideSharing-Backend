@@ -125,7 +125,7 @@ router.put('/customer/update',  upload.single('photo'), function (req, res) {
     const email = req.body.email;
     const contact = req.body.contact;
     const gender = req.body.gender;
-    const photo = req.body.photo;
+    const photo = req.file.filename;
 
     console.log(req.file)
     
