@@ -8,12 +8,14 @@ const { check, validationResult } = require('express-validator');
 const upload = require('../middleware/upload');
 
 //Customer Sign up
-router.post('/customer/insert', [
+router.post('/customer/insert',
+ [
     check('fullname', "Please enter your name").not().isEmpty(),
     check('email', "Invalid Email address").isEmail(),
     check('contact', "Contact is required").not().isEmpty(),
     check('gender', "Please choose a gender").not().isEmpty()
-], function (req, res) {
+],
+ function (req, res) {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
@@ -138,6 +140,7 @@ router.put('/customer/update',  upload.single('photo'), function (req, res) {
     })
 
 })
+
 router.put('/customer/updateImage', auth.checkCustomer, upload.single('photo'), function (req, res) {
     const id = req.customerData._id;
     if (req.file == undefined) {
