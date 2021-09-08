@@ -19,7 +19,7 @@ router.post('/customer/booking', function (req, res) {
 
     const BookingData = new AdvanceBook({
         ID: id,
-         email: email, contact: contact, from: from, to: to, date: date, time: time, distance: distance,
+        email: email, contact: contact, from: from, to: to, date: date, time: time, distance: distance,
         price: price
     });
 
@@ -53,14 +53,13 @@ router.get('/booking/single/:id', function (req, res) {
         })
 })
 
-router.get('/booking/single',auth.checkCustomer, function (req, res) {
+router.get('/booking/single', auth.checkCustomer, function (req, res) {
     // const pid = req.params.id;
     const id = req.customerData._id
     AdvanceBook.find({ ID: id })
         .then(function (BookingData) {
-            // console.log("BookingData")
-            // console.log(BookingData)
-            res.status(200).json({data: BookingData})
+            console.log(BookingData)
+            res.status(200).json({ success: true, data: BookingData })
         })
         .catch(function (e) {
             // console.log(e)
@@ -68,9 +67,8 @@ router.get('/booking/single',auth.checkCustomer, function (req, res) {
         })
 })
 
-router.put('/update/booking', function (req, res) {
+router.put('/update/booking', auth.checkCustomer, function (req, res) {
     const id = req.body.id;
-    const fullname = req.body.fullname;
     const from = req.body.from;
     const to = req.body.to;
     const date = req.body.date;
@@ -79,15 +77,14 @@ router.put('/update/booking', function (req, res) {
     const price = req.body.price;
 
     AdvanceBook.updateOne({ _id: id }, {
-        fullname: fullname, from: from, to: to, date: date, time: time, distance: distance,
+        from: from, to: to, date: date, time: time, distance: distance,
         price: price
+    }).then(function (result) {
+        res.status(200).json({ message: "Booking updated!!", success: true });
+        console.log(result)
+    }).catch(function (e) {
+        res.status(500).json({ message: e, success: false });
     })
-        .then(function (result) {
-            res.status(200).json({ message: "Booking updated!!", success: true });
-        })
-        .catch(function (e) {
-            res.status(500).json({ message: e, success: false });
-        })
 })
 
 
@@ -101,7 +98,5 @@ router.delete('/delete/booking/:bid', function (req, res) {
             res.status(500).json({ message: e, status: "false" });
         })
 })
-
-
 
 module.exports = router;
