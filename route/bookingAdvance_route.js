@@ -54,7 +54,6 @@ router.get('/booking/single/:id', function (req, res) {
 })
 
 router.get('/booking/single', auth.checkCustomer, function (req, res) {
-    // const pid = req.params.id;
     const id = req.customerData._id
     AdvanceBook.find({ ID: id })
         .then(function (BookingData) {
@@ -62,7 +61,6 @@ router.get('/booking/single', auth.checkCustomer, function (req, res) {
             res.status(200).json({ success: true, data: BookingData })
         })
         .catch(function (e) {
-            // console.log(e)
             res.status(500).json({ message: e })
         })
 })
@@ -81,7 +79,6 @@ router.put('/update/booking', auth.checkCustomer, function (req, res) {
         price: price
     }).then(function (result) {
         res.status(200).json({ message: "Booking updated!!", success: true });
-        console.log(result)
     }).catch(function (e) {
         res.status(500).json({ message: e, success: false });
     })

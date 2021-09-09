@@ -15,8 +15,6 @@ router.post('/insert/Ride', function (req, res) {
     const BookingData = new Ride({
         from: from, to: to, date: date, distance: distance, price: price, driverID: driver, customerID: customer
     });
-
-    console.log(BookingData)
     
     BookingData.save()
         .then(function (result) {
@@ -29,11 +27,10 @@ router.post('/insert/Ride', function (req, res) {
 
 router.get('/get/myBookings', auth.checkCustomer, function(req, res) {
     const id = req.customerData.id
-    // console.log(req.customerData.id)
+    
     Ride.find({ customerID: id })
     .then(function(data){
         res.status(200).json({success: true, data: data})
-        // console.log(data)
     })
     .catch(function(e){
         res.status(500).json({message: e});

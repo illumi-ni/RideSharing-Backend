@@ -25,8 +25,6 @@ router.post('/customer/insert',
         const gender = req.body.gender;
         const photo = req.body.photo;
 
-        // console.log(req.body)
-
         const customerData = new Customer({ fullname: fullname, email: email, contact: contact, gender: gender, photo:photo});
         customerData.save().then(function (result) {
             res.status(201).json({ success: true, message: "Customer Registered!!" });
@@ -92,10 +90,8 @@ router.get('/customer/all', function(req,res){
 
 router.get('/customer/single/:email', function(req,res){
     const Cemail = req.params.email;
-    console.log(Cemail)
     Customer.findOne({email:Cemail})
     .then(function(ConsumerData){
-        console.log(ConsumerData)
         res.status(200).json({ CustomerData: ConsumerData })
     })
     .catch(function(e){
@@ -105,7 +101,6 @@ router.get('/customer/single/:email', function(req,res){
 
 
 router.get('/customer/details', auth.checkCustomer, function(req,res){
-    console.log(req.customerData._id)
     const id = req.customerData._id;
    
     Customer.findOne({_id: id})
@@ -119,32 +114,25 @@ router.get('/customer/details', auth.checkCustomer, function(req,res){
 })
 
 router.put('/customer/update',  upload.single('photo'), function (req, res) {
-
     const id = req.body.id;
     const fullname = req.body.fullname;
     const email = req.body.email;
     const contact = req.body.contact;
     const gender = req.body.gender;
     const photo = req.file.filename;
-
-    console.log(req.file)
     
-
     Customer.updateOne({ _id: id }, { fullName: fullname, email: email, contact: contact, gender:gender,photo: photo })
         .then(function (result) {
             res.status(201).json({ messsage: "Customer updated!!", success: true })
-
         })
         .catch(function (err) {
             res.status(500).json({ messsage: err, success: false })
     })
-
 })
 
 router.put('/customer/updateImage', auth.checkCustomer, upload.single('photo'), function (req, res) {
     const id = req.customerData._id;
     if (req.file == undefined) {
-        console.log(req.file);
         return res.status(201).json({ success: false, message: "Invalid  file format" })
     }
     Customer.updateOne({ _id: id }, {
@@ -164,8 +152,6 @@ router.put('/customer/update/:id', auth.checkCustomer, function (req, res) {
     const gender = req.body.gender;
     const photo = req.body.photo;
 
-    console.log(id, fullname, email, contact, gender)
-
     Customer.updateOne({ _id: id }, {
         fullname: fullname, email: email, contact: contact, gender: gender
     })
@@ -174,7 +160,6 @@ router.put('/customer/update/:id', auth.checkCustomer, function (req, res) {
     }).catch(function (e) {
         res.status(500).json({ message: e, success: false })
     })
-    // console.log(profileimg)
 })
 
 module.exports = router;

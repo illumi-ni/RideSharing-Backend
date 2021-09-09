@@ -5,7 +5,6 @@ const cors = require('cors');
 const path = require('path');
 const Driver = require("./model/driver_model");
 const Customer = require("./model/customer_model");
-// // const ws = require('ws');
 
 const app = express();
 app.use(cors());
@@ -19,9 +18,7 @@ const admin_route = require('./route/admin_route');
 const booking_route = require('./route/bookingAdvance_route');
 const contact_route = require('./route/contact_route');
 const ride_route = require('./route/ride_route');
-// const { Server } = require('http');
 
-// app.use("/images", express.static(path.join(__dirname, "images")))
 app.use(express.static("images"));
 app.use(driver_route);
 app.use(route_customer);
@@ -30,23 +27,18 @@ app.use(booking_route);
 app.use(contact_route);
 app.use(ride_route);
 
-
 const PORT = process.env.PORT || 90;
 const server = app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
-
-
 const socket = require('socket.io');
 const io = socket(server);
 
-// var io = socketio.listen(server)
 let customerID, driverID, joinerID;
 
 io.sockets.on('connection', function (client) {
 
-  // console.log("client connected: " + client.id);
   client.on("message", function (data) {
 
     const data1 = JSON.parse(data)
@@ -70,6 +62,7 @@ io.sockets.on('connection', function (client) {
   client.on("invite", function (data) {
 
     const data1 = JSON.parse(data)
+    
     // sending to all customers except sender
     customers = Customer.find({}).then((customer) => {
       customer.forEach((cd, key) => {

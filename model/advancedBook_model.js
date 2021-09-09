@@ -31,7 +31,6 @@ const AdvanceBook = mongoose.model('AdvanceBook', {
     price: {
         type: String
     }
-
 });
 
 module.exports = AdvanceBook;
