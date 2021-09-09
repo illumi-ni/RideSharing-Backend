@@ -40,4 +40,17 @@ router.get('/get/myBookings', auth.checkCustomer, function(req, res) {
     })
 })
 
+router.get('/driver/get/myBookings', auth.checkDriver, function(req, res) {
+    const id = req.driverData.id
+    // console.log(req.customerData.id)
+    Ride.find({ driverID: id })
+    .then(function(data){
+        res.status(200).json({success: true, data: data})
+        // console.log(data)
+    })
+    .catch(function(e){
+        res.status(500).json({message: e});
+    })
+})
+
 module.exports = router;

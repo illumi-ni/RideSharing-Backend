@@ -96,4 +96,9 @@ io.sockets.on('connection', function (client) {
   client.on("customerCancel", function (message) {
     client.broadcast.emit('cuCanceled' + driverID, message);
   });
+
+  client.on("end", function (dd) {
+    const driverData = JSON.parse(dd)
+    client.broadcast.emit('rateDriver' + customerID, driverData);
+  });
 });

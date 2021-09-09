@@ -44,6 +44,9 @@ const Driver = mongoose.model('Driver', {
     },
     photo:{
         type:String
+    },
+    rating:{
+        type: String
     }
 });
 

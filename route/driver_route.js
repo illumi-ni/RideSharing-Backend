@@ -105,9 +105,9 @@ router.put('/driver/update/:id', auth.checkDriver, function (req, res) {
     const citizenship = req.body.citizenship;
     const licence = req.body.licence;
     const vechileNo = req.body.vechileNo;
-    const photo= req.body.photo;
+    const rating= req.body.rating;
 
-    Driver.updateOne({ _id: id }, { fullname: fullname, username: username, phone: phone, email: email, gender: gender, citizenship: citizenship, licence: licence, vechileNo: vechileNo })
+    Driver.updateOne({ _id: id }, { fullname: fullname, username: username, phone: phone, email: email, gender: gender, citizenship: citizenship, licence: licence, vechileNo: vechileNo, rating: rating })
         .then(function (result) {
             res.status(201).json({ messsage: "Driver updated!!", success: true })
 
